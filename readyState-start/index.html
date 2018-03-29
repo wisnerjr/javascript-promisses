@@ -21,16 +21,19 @@
 	<p><a href="https://commons.wikimedia.org/wiki/File:San_Francisco_Market_Street_between_4th_and_5th_St.jpg">Photo: Andreas Praefcke (Own work) [GFDL (http://www.gnu.org/copyleft/fdl.html) or CC BY 3.0 (http://creativecommons.org/licenses/by/3.0)], via Wikimedia Commons</a></p>
 	<script>
 		function ready() {
-			 return new Promise(function(resolve, reject) {
-					document.addEventListener('readystatechange', function() {
-					if (document.readyState != 'loading') {
-						resolve();
+			return new Promise(function(resolve, reject) {
+				function checkState() {
+					if (document.readyState !== 'loading') {
+							resolve();
 					}
-				});
-			}).then(wrapperResolved());
+				};
+
+				document.addEventListener('readystatechange', checkState);
+				checkState();
+			});
 		};
 
-		ready();
+		ready().then(wrapperResolved);
 
 		function wrapperResolved() {
 			var completion = document.querySelector('.completion');
